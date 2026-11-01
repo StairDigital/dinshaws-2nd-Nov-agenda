@@ -46,15 +46,18 @@ img{display:block;max-width:100%}
 
 /* HERO: fits one laptop screen */
 .hero{position:relative;height:100vh;height:100svh;min-height:540px;background:var(--red);color:#fff;overflow:hidden}
-.hero-grid{height:100%;max-width:1440px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-rows:minmax(0,1fr) auto;gap:clamp(14px,3vh,30px) clamp(24px,3vw,48px);padding:clamp(18px,4vh,44px) max(24px,env(safe-area-inset-right,0px)) clamp(18px,4vh,40px) max(24px,env(safe-area-inset-left,0px))}
-.hero-copy{align-self:center;min-width:0}
+.hero-grid{position:relative;z-index:1;height:100%;max-width:1440px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;gap:clamp(14px,3vh,30px) clamp(24px,3vw,48px);padding:clamp(18px,4vh,44px) max(24px,env(safe-area-inset-right,0px)) clamp(18px,4vh,40px) max(24px,env(safe-area-inset-left,0px))}
+.hero-copy{align-self:center;min-width:0;max-width:min(760px,58%)}
 .hero h1{font-weight:800;text-transform:uppercase;font-size:min(7vw,10.5vh);line-height:.9;margin:0;max-width:13ch}
 .hero h1 em{font-style:italic;color:#FFD166}
 .hero .lede{margin-top:clamp(10px,2.4vh,24px);font-size:clamp(.95rem,min(1.35vw,2.2vh),1.22rem);max-width:50ch;color:#fff}
-.hero-pic{position:relative;min-height:0;border-radius:22px;overflow:hidden;background:rgba(90,8,4,.35)}
-.hero-pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 1.4s ease}
-.hero-pic img.on{opacity:1}
-.agenda{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.reel{position:absolute;inset:0 0 0 38%;z-index:0;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 34%);mask-image:linear-gradient(90deg,transparent 0,#000 34%)}
+.reel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.6s ease;transform:scale(1.06);will-change:transform,opacity}
+.reel img.on{opacity:1;animation:kb 7.5s ease-out forwards}
+@keyframes kb{from{transform:scale(1.14) translate3d(1.5%,1%,0)}to{transform:scale(1.02) translate3d(0,0,0)}}
+.reel::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(120,12,8,.35) 0,rgba(120,12,8,0) 22%,rgba(120,12,8,0) 55%,rgba(150,16,10,.85) 100%)}
+@media (prefers-reduced-motion: reduce){.reel img.on{animation:none;transform:none}}
+.agenda{grid-column:1/-1;position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .agenda a{display:block;color:#fff;text-decoration:none;padding:clamp(10px,1.8vh,16px) 16px;border-top:2px solid rgba(255,255,255,.55);background:rgba(120,10,6,.22);border-radius:0 0 12px 12px;transition:background .25s,transform .25s,border-color .25s;min-width:0}
 .agenda a:hover,.agenda a:focus-visible{background:rgba(255,255,255,.14);transform:translateY(-4px);border-color:#FFD166;outline:none}
 .agenda .n{font-family:var(--display);font-weight:800;font-size:clamp(1.4rem,3.4vh,2.1rem);line-height:1;color:#FFD166}
@@ -64,7 +67,9 @@ img{display:block;max-width:100%}
 @media(max-width:900px){
   .hero{height:auto;min-height:100svh}
   .hero-grid{grid-template-columns:1fr;grid-template-rows:auto;padding-left:16px;padding-right:16px}
-  .hero-pic{order:-1;height:34vh;min-height:200px}
+  .reel{inset:0;-webkit-mask-image:none;mask-image:none}
+  .reel::after{background:linear-gradient(180deg,rgba(150,16,10,.5) 0,rgba(180,20,14,.25) 25%,rgba(205,30,24,.92) 55%,#DE251E 100%)}
+  .hero-copy{max-width:none;padding-top:30vh}
   .hero h1{font-size:clamp(2.4rem,11vw,4rem)}
   .agenda{grid-template-columns:1fr 1fr}
 }
@@ -559,17 +564,18 @@ section.ch,section.notebook{--pop:var(--red);--popfg:#fff}
 </header>
 
 <section class="hero" aria-label="Introduction">
+  <div class="reel" id="reel" aria-hidden="true">
+      <img class="on" src="img/hero_r07.jpg" alt="" style="object-position:50% 64%">
+      <img src="img/hero_l06.jpg" alt="" loading="lazy">
+      <img src="img/hero_p04.jpg" alt="" loading="lazy" style="object-position:50% 55%">
+      <img src="img/hero_l24.jpg" alt="" loading="lazy" style="object-position:50% 38%">
+    </div>
   <div class="hero-grid">
     <div class="hero-copy">
       <h1>From the Plant to the Platform to the <em>Boardroom</em></h1>
       <p class="lede">4 conversations for the day: what we learned in the Nordics, where the Instamart relationship now stands, how quick commerce is performing, and how the board and the incoming professionals will work together.</p>
     </div>
-    <div class="hero-pic" id="reel" aria-hidden="true">
-      <img class="on" src="img/hero_r07.jpg" alt="">
-      <img src="img/hero_l06.jpg" alt="" loading="lazy">
-      <img src="img/hero_p04.jpg" alt="" loading="lazy">
-      <img src="img/hero_l24.jpg" alt="" loading="lazy">
-    </div>
+    
     <nav class="agenda" aria-label="Agenda">
       <a href="#nordic"><div class="n">01</div><div class="t">Sweden and Norway Visit</div><div class="d">Tetra Pak sessions, Diplom-Is factory, Oslo shelf and the yoghurt plant brief</div></a>
       <a href="#instamart"><div class="n">02</div><div class="t">Swiggy Instamart Meeting</div><div class="d">28 October 2026: outcomes, offers, operations and next steps</div></a>
